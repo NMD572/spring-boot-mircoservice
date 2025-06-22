@@ -27,7 +27,6 @@ class OrderServiceApplicationTests {
 	}
 
 	static {
-		mysqlContainer.withReuse(true);
 		mysqlContainer.start();
 	}
 	
