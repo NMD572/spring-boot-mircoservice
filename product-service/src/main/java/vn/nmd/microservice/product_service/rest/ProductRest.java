@@ -25,7 +25,7 @@ public class ProductRest {
 			return new ResponseEntity<>(productService.createProduct(productRequest), HttpStatus.CREATED);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -35,7 +35,7 @@ public class ProductRest {
 			return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

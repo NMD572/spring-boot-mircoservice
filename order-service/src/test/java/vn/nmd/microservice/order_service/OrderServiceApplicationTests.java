@@ -6,12 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.testcontainers.containers.MySQLContainer;
 
 import io.restassured.RestAssured;
+import vn.nmd.microservice.order_service.stubs.InventoryClientStub;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 0) // random port for wire mock server
 class OrderServiceApplicationTests {
 
 	@ServiceConnection
@@ -34,11 +37,13 @@ class OrderServiceApplicationTests {
 	void shouldPlaceOrder() {
 		String requestBody = """
 				{
-				    "skuCode":"iphone 16",
+				    "skuCode":"iphone_15",
 				    "price":1000,
 				    "quantity":1
 				}
 								""";
+		InventoryClientStub.stubInventoryCall("iphone_15",1);
+		
 		RestAssured.given()
 			.contentType("application/json")
 			.body(requestBody)
@@ -49,7 +54,7 @@ class OrderServiceApplicationTests {
 			.statusCode(HttpStatus.CREATED.value())
 			.body("id", Matchers.notNullValue())
 			.body("orderNumber", Matchers.notNullValue())
-			.body("skuCode", Matchers.equalTo("iphone 16"))
+			.body("skuCode", Matchers.equalTo("iphone_15"))
 			.body("price", Matchers.equalTo(1000))
 			.body("quantity", Matchers.equalTo(1));
 			

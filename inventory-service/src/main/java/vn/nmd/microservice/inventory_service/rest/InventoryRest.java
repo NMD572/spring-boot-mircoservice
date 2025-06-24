@@ -13,7 +13,7 @@ import vn.nmd.microservice.inventory_service.service.IInventoryService;
 @RestController
 @RequestMapping("/api/inventory")
 @RequiredArgsConstructor
-public class InventortyRest {
+public class InventoryRest {
 	
 	private final IInventoryService inventoryService;
 	
@@ -23,7 +23,7 @@ public class InventortyRest {
 			return new ResponseEntity<>(inventoryService.isInStock(skuCode, quantity), HttpStatus.CREATED);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
