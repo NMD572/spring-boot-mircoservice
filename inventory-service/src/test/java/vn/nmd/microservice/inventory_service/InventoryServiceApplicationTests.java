@@ -1,6 +1,8 @@
-package vn.nmd.microservice.order_service;
+package vn.nmd.microservice.inventory_service;
 
-import org.hamcrest.Matchers;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +14,7 @@ import org.testcontainers.containers.MySQLContainer;
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class OrderServiceApplicationTests {
+class InventoryServiceApplicationTests {
 
 	@ServiceConnection
 	static MySQLContainer mysqlContainer = new MySQLContainer("mysql:8.1.0");
@@ -25,34 +27,31 @@ class OrderServiceApplicationTests {
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = port;
 	}
-
+	
 	static {
 		mysqlContainer.start();
 	}
 	
 	@Test
-	void shouldPlaceOrder() {
-		String requestBody = """
-				{
-				    "skuCode":"iphone 16",
-				    "price":1000,
-				    "quantity":1
-				}
-								""";
-		RestAssured.given()
-			.contentType("application/json")
-			.body(requestBody)
-			.when()
-			.post("/api/order")
-			.then()
-			.log().all()
-			.statusCode(HttpStatus.CREATED.value())
-			.body("id", Matchers.notNullValue())
-			.body("orderNumber", Matchers.notNullValue())
-			.body("skuCode", Matchers.equalTo("iphone 16"))
-			.body("price", Matchers.equalTo(1000))
-			.body("quantity", Matchers.equalTo(1));
-			
+	void shouldCheckInUse() {
+		Boolean inStockReponse = RestAssured.given()
+				.contentType("application/json")
+				.get("/api/inventory?skuCode=iphone_15&quantity=10")
+				.then()
+				.log().all()
+				.statusCode(HttpStatus.CREATED.value())
+				.extract().response().as(Boolean.class);
+		assertTrue(inStockReponse);
+		
+		Boolean notInStockReponse = RestAssured.given()
+				.contentType("application/json")
+				.get("/api/inventory?skuCode=iphone_15&quantity=101")
+				.then()
+				.log().all()
+				.statusCode(HttpStatus.CREATED.value())
+				.extract().response().as(Boolean.class);
+		assertFalse(notInStockReponse);
+		
 	}
 
 }

@@ -1,3 +1,4 @@
 /.metadata/
 /order-service/mysql/
 /product-service/mongodb/
+/inventory-service/mysql/

@@ -47,6 +47,7 @@ class ProductServiceApplicationTests {
 			.when()
 			.post("/api/product")
 			.then()
+			.log().all()
 			.statusCode(HttpStatus.CREATED.value())
 			.body("id", Matchers.notNullValue())
 			.body("name", Matchers.equalTo("Iphone 16"))
