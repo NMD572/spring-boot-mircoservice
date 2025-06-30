@@ -2,3 +2,4 @@
 /order-service/mysql/
 /product-service/mongodb/
 /inventory-service/mysql/
+/api-gateway/volume-data
