@@ -1,4 +1,4 @@
-package vn.nmd.microservice.product_service.bean;
+package vn.nmd.microservice.product_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
