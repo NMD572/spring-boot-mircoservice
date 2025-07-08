@@ -15,10 +15,10 @@ import vn.nmd.microservice.product_service.service.IProductService;
 @RestController
 @RequestMapping("/api/product")
 public class ProductRest {
-	
+
 	@Autowired
 	private IProductService productService;
-	
+
 	@PostMapping()
 	public ResponseEntity<?> createProduct(@RequestBody ProductRequest productRequest) {
 		try {
@@ -28,10 +28,11 @@ public class ProductRest {
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping()
 	public ResponseEntity<?> getAllData() {
 		try {
+//			Thread.sleep(5000); // Simulate a delay for testing circuit breaker
 			return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
 		} catch (Exception ex) {
 			ex.printStackTrace();
