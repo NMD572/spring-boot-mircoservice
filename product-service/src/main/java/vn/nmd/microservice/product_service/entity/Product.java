@@ -21,7 +21,8 @@ public class Product {
 	@Id
 	private String id;
 	private String name;
+	private String skuCode;
 	private String description;
 	private BigDecimal price;
-	
+
 }

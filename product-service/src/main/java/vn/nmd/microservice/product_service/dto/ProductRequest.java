@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRequest {
+	private String skuCode;
 	private String name;
 	private String description;
 	private BigDecimal price;

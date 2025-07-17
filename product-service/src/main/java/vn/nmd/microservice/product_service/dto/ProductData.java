@@ -16,6 +16,7 @@ import lombok.Setter;
 public class ProductData {
 	private String id;
 	private String name;
+	private String skuCode;
 	private String description;
 	private BigDecimal price;
 }
