@@ -35,8 +35,8 @@ public class OrderServiceImpl implements IOrderService {
 			Order newOrder = new Order();
 			newOrder.setOrderNumber(UUID.randomUUID().toString());
 			newOrder.setSkuCode(orderRequest.skuCode());
-			newOrder.setPrice(orderRequest.price());
 			newOrder.setQuantity(orderRequest.quantity());
+			newOrder.setPrice(orderRequest.price());
 			// save to order repository
 			orderRepository.save(newOrder);
 			// TODO: decrease the number of quantity in inventory

@@ -24,20 +24,29 @@
 
 1. Create a new realm in Keycloak.
 2. Create a new client in the realm.
-   - **Step 1**: Set the client ID and enable always display in UI (optional).
-   - **Step 2**: To enable client authentication, you have to set Client authentication to "ON". In Authentication flow, set the "Service accounts roles" to "On".
-   - **Step 3**: If you have Root Url or Home URL, set it in the next step (optional).
+   - 2.1: Create a new client for test with Postman (Client Authentication):
+     - **Step 1**: Set the client ID and enable always display in UI (optional).
+     - **Step 2**: To enable client authentication, you have to set Client authentication to "ON". In Authentication flow, set the "Service accounts roles" to "On". Turn off all other options.
+     - **Step 3**: If you have Root Url or Home URL, set it in the next step (optional). Note: When login with Postman, you will not be redirected to this URL.
+   - 2.2: Create a new client for integration with FE (Angular, React, etc.):
+     - **Step 1**: Set the client ID and enable always display in UI (optional).
+     - **Step 2**: Set the Valid redirect URIs = <your-homepage-url> (e.g., `http://localhost:4200/*` for Angular). Web origin: \* (allow all orgin connect) or your homepage host (example: `http://localhost:4200` - allow only one origin: `http://localhost:4200` connect).
+     - **Step 3**: Turn off Client Authentication and only enable "Authentication flow" in Authentication Flow. At this project, you don't need to use Authority from Keycloak. So, you can turn off all other options.
 3. Set up keycloak to application.properties file:
 
    - **Step 1**: Click realm settings in the left sidebar.
-   - **Step 2**: In general settings, click "OpenID Endpoint Configuration" and copy the issuer URI.
-   - **Step 3**: Fill it into your `application.properties` file.
+   - **Step 2**: Setting for integration with FE: In login settings, enable:
+     - "Login with email" (optional, if you want to use email for login).
+     - "Registration" (optional, if you want to allow users to register).
+     - "Remember me" (optional, if you want to use remember me functionality).
+   - **Step 3**: In general settings, click "OpenID Endpoint Configuration" and copy the issuer URI.
+   - **Step 4**: Fill it into your `application.properties` file.
 
    ```properties
    spring.security.oauth2.resourceserver.jwt.issuer-uri=<issuer-uri>
    ```
 
-   - **Step 4**: Create security configuration class to enable security in your application.
+   - **Step 5**: Create security configuration class to enable security in your application.
 
    ```java
    @Configuration
