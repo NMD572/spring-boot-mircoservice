@@ -5,10 +5,12 @@ on:
     branches: [ feature/cicd ]
     paths:
       - 'product-service/**'
+      - '.github/workflows/product-service-ci-cd.yml'
   pull_request:
     branches: [ feature/cicd ]
     paths:
       - 'product-service/**'
+      - '.github/workflows/product-service-ci-cd.yml'
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/product-service
