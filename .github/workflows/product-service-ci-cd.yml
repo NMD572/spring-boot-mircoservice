@@ -88,6 +88,6 @@ jobs:
               --name product-service \
               --network microservice-net \
               -p 9080:9080 \
-              -e database.connection.url="${{ secrets.MONGO_URI }}" \
+              -e JAVA_TOOL_OPTIONS="-Ddatabase.connection.url=${{ secrets.MONGO_URI }}" \
               --restart unless-stopped \
               ${{ secrets.DOCKER_USERNAME }}/product-service:latest
