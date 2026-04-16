@@ -42,6 +42,7 @@ jobs:
     name: Build & Push Docker Image
     needs: build-and-test
     runs-on: ubuntu-latest
+    environment: dev
     if: github.ref == 'refs/heads/feature/cicd' && github.event_name == 'push'
 
     steps:
@@ -73,6 +74,7 @@ jobs:
     name: Deploy to VPS
     needs: docker-build-push
     runs-on: ubuntu-latest
+    environment: dev
     if: github.ref == 'refs/heads/feature/cicd' && github.event_name == 'push'
 
     steps:
